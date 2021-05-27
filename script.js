@@ -33,6 +33,7 @@ function scanImages()
 
                 let temp_h = face._box.height;
                 let temp_w = face._box.width;
+                temp_w = temp_w * 2;
 
                 let temp_h2 = customCensor.height;
                 let temp_w2 = customCensor.width;
