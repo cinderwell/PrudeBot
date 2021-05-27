@@ -3,7 +3,7 @@ var startImage = new Image();
 var finalImage = new Image();//MarvinImage();
 var customCensor = new Image();
 var censorOption = 'custom';
-
+var scale = 2;
 
 Promise.all([
     faceapi.nets.tinyFaceDetector.loadFromUri('/models')
@@ -34,7 +34,7 @@ function scanImages()
 
                 let temp_h = face._box.height;
                 let temp_w = face._box.width;
-                temp_w = temp_w * 2;
+                temp_w = temp_w * scale;
 
                 let temp_h2 = customCensor.height;
                 let temp_w2 = customCensor.width;
@@ -51,7 +51,7 @@ function scanImages()
 
                 //ctx.drawImage(customCensor,face._box.x,face._box.y + face._box.height, temp_w2 * scale, temp_h2 * scale);
 
-                ctx.drawImage(customCensor,face._box.x,face._box.y + face._box.height, temp_w, temp_h2 * (temp_w / temp_w2));
+                ctx.drawImage(customCensor,face._box.x - (temp_w/(scale*2)),face._box.y + face._box.height, temp_w, temp_h2 * (temp_w / temp_w2));
 
 
             });
