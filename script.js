@@ -4,6 +4,7 @@ var finalImage = new Image();//MarvinImage();
 var customCensor = new Image();
 var censorOption = 'custom';
 var scale = 2;
+var faceValue = .5;
 
 Promise.all([
     faceapi.nets.tinyFaceDetector.loadFromUri('/models')
@@ -16,7 +17,7 @@ function scanImages()
         {
             console.log(changed);
             changed = false;
-            const detections = await faceapi.detectAllFaces(startImage, new faceapi.TinyFaceDetectorOptions({ minConfidence: 0.45 }));
+            const detections = await faceapi.detectAllFaces(startImage, new faceapi.TinyFaceDetectorOptions({ minConfidence: faceValue }));
             console.log(detections);
             //finalImage = { ...startImage };
             //finalImage.load(startImage.src);
@@ -34,10 +35,13 @@ function scanImages()
 
                 let temp_h = face._box.height;
                 let temp_w = face._box.width;
+                
                 temp_w = temp_w * scale;
 
                 let temp_h2 = customCensor.height;
                 let temp_w2 = customCensor.width;
+
+                let offset = 0;//(temp_w / scale);
 
                 /*
                 if(temp_w >= temp_w2)
@@ -51,7 +55,7 @@ function scanImages()
 
                 //ctx.drawImage(customCensor,face._box.x,face._box.y + face._box.height, temp_w2 * scale, temp_h2 * scale);
 
-                ctx.drawImage(customCensor,face._box.x - (temp_w/(scale*2)),face._box.y + face._box.height, temp_w, temp_h2 * (temp_w / temp_w2));
+                ctx.drawImage(customCensor,face._box.x + offset,face._box.y + face._box.height, temp_w, temp_h2 * (temp_w / temp_w2));
 
 
             });
@@ -98,6 +102,23 @@ function dropDownChange() {
         changed = true;
     }
     
+};
+
+function thresholdChange() {
+
+    let sliderValue = document.getElementById("threshold").value;
+    document.getElementById("thresholdValue").textContent = sliderValue;
+
+    faceValue = sliderValue;
+    changed = true;
+};
+
+function scaleChange() {
+
+    let sliderValue = document.getElementById("scale").value;
+    document.getElementById("scaleValue").textContent = sliderValue;
+    scale = sliderValue;
+    changed = true;
 };
 
 var loadImageFile = function(event) {
