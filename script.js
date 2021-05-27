@@ -71,8 +71,9 @@ function scanImages()
 
 
             //var canvas = document.getElementById("mycanvas");
-            //var img    = canvas.toDataURL("image/png");
-
+            var img = outImage.toDataURL("image/png");
+            var completed = document.getElementById('completed');
+            completed.src = img;
         }
     },100);
 };
