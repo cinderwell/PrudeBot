@@ -7,7 +7,8 @@ var scale = 2;
 var faceValue = .5;
 
 Promise.all([
-    faceapi.nets.tinyFaceDetector.loadFromUri('/models')
+    faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
+    faceapi.nets.ssdMobilenetv1.loadFromUri('/models')
   ]).then(scanImages());
 
 function scanImages()
@@ -17,7 +18,8 @@ function scanImages()
         {
             console.log(changed);
             changed = false;
-            const detections = await faceapi.detectAllFaces(startImage, new faceapi.TinyFaceDetectorOptions({ minConfidence: faceValue }));
+            //const detections = await faceapi.detectAllFaces(startImage, new faceapi.TinyFaceDetectorOptions({ minConfidence: faceValue }));
+            const detections = await faceapi.detectAllFaces(startImage, new faceapi.SsdMobilenetv1Options({ minConfidence: faceValue }));
             console.log(detections);
             //finalImage = { ...startImage };
             //finalImage.load(startImage.src);
@@ -108,8 +110,8 @@ function thresholdChange() {
 
     let sliderValue = document.getElementById("threshold").value;
     document.getElementById("thresholdValue").textContent = sliderValue;
-
-    faceValue = sliderValue;
+    console.log(sliderValue);
+    faceValue = parseFloat(sliderValue);
     changed = true;
 };
 
@@ -117,6 +119,7 @@ function scaleChange() {
 
     let sliderValue = document.getElementById("scale").value;
     document.getElementById("scaleValue").textContent = sliderValue;
+    console.log(sliderValue);
     scale = sliderValue;
     changed = true;
 };
