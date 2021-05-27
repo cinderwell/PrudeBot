@@ -94,6 +94,7 @@ function dropDownChange() {
     if(!(choice === 'custom'))
     {
         customCensor.src = choice;
+        document.getElementById('censor').src = customCensor.src;
         changed = true;
     }
     
@@ -118,5 +119,6 @@ var loadImageFile2 = function(event) {
         customCensor.src = reader.result;
     }
     reader.readAsDataURL(file);
+    document.getElementById('censor').src = customCensor.src;
     changed = true;
 };
