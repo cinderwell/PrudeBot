@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>PrudeBot</title>
+  <script defer src="face-api.min.js"></script>
+  <script defer src="script.js"></script>
+  <style>
+    
+  </style>
+</head>
+<body>
+    <div>
+        <h1>PrudeBot</h1>
+    </div>
+    <div>
+        Photo
+        <input type="file" multiple="false" accept="image/*" id="finput" onchange="loadImageFile(event)">
+    </div>
+    <div>
+        Custom censor image
+        <input type="file" multiple="false" accept="image/*" id="finput2" onchange="loadImageFile2(event)">
+    </div>
+    <div>
+        <img id="originalImage">
+        <br>
+        <canvas id="finalImage" height=100 width=100></canvas>
+    </div>
+</body>
+</html>
