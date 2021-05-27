@@ -16,7 +16,7 @@ function scanImages()
         {
             console.log(changed);
             changed = false;
-            const detections = await faceapi.detectAllFaces(startImage, new faceapi.TinyFaceDetectorOptions({ minConfidence: 0.15 }));
+            const detections = await faceapi.detectAllFaces(startImage, new faceapi.TinyFaceDetectorOptions({ minConfidence: 0.45 }));
             console.log(detections);
             //finalImage = { ...startImage };
             //finalImage.load(startImage.src);
@@ -39,6 +39,7 @@ function scanImages()
                 let temp_h2 = customCensor.height;
                 let temp_w2 = customCensor.width;
 
+                /*
                 if(temp_w >= temp_w2)
                 {
                     var scale = temp_w / temp_w2;
@@ -46,12 +47,11 @@ function scanImages()
                 else
                 {
                     var scale = temp_w2 / temp_w;
-                }
+                }*/
 
+                //ctx.drawImage(customCensor,face._box.x,face._box.y + face._box.height, temp_w2 * scale, temp_h2 * scale);
 
-
-                ctx.drawImage(customCensor,face._box.x,face._box.y + face._box.height,
-                    temp_w2 * scale, temp_h2 * scale);
+                ctx.drawImage(customCensor,face._box.x,face._box.y + face._box.height, temp_w, temp_h2 * (temp_w / temp_w2));
 
 
             });
