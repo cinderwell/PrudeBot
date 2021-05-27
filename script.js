@@ -2,7 +2,7 @@ var changed = false;
 var startImage = new Image();
 var finalImage = new Image();//MarvinImage();
 var customCensor = new Image();
-
+var censorOption = 'custom';
 
 
 Promise.all([
@@ -12,7 +12,7 @@ Promise.all([
 function scanImages()
 {
     setInterval(async () => {
-        if(changed && startImage.src && customCensor.src) //remove custom censor when random ones available
+        if(changed && startImage.src && (customCensor.src || !(censorOption === 'custom'))) //remove custom censor when random ones available
         {
             console.log(changed);
             changed = false;
@@ -25,6 +25,7 @@ function scanImages()
             outImage.height = startImage.height;
             outImage.width = startImage.width;
             var ctx=outImage.getContext("2d");
+            ctx.clearRect(0, 0, outImage.width, outImage.height);
             ctx.drawImage(startImage,0,0);
 
             detections.forEach(face => {
@@ -38,7 +39,7 @@ function scanImages()
                 let temp_h2 = customCensor.height;
                 let temp_w2 = customCensor.width;
 
-                if(temp_w <= temp_w2)
+                if(temp_w >= temp_w2)
                 {
                     var scale = temp_w / temp_w2;
                 }
@@ -83,6 +84,19 @@ function randomCensor()
     let censor = new Image();
     //stuff
     return censor;
+};
+
+function dropDownChange() {
+
+    
+    var choice = document.getElementById("options").value;
+    censorOption = choice;
+    if(!(choice === 'custom'))
+    {
+        customCensor.src = choice;
+        changed = true;
+    }
+    
 };
 
 var loadImageFile = function(event) {
