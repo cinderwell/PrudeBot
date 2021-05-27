@@ -37,7 +37,14 @@ function scanImages()
                 let temp_h2 = customCensor.height;
                 let temp_w2 = customCensor.width;
 
-                let scale = temp_w / temp_w2;
+                if(temp_w <= temp_w2)
+                {
+                    var scale = temp_w / temp_w2;
+                }
+                else
+                {
+                    var scale = temp_w2 / temp_w;
+                }
 
 
 
