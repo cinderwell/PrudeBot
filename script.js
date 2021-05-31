@@ -5,6 +5,7 @@ var customCensor = new Image();
 var censorOption = 'custom';
 var scale = 2;
 var faceValue = .5;
+var debug = false;
 
 Promise.all([
     faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
@@ -34,16 +35,24 @@ function scanImages()
             detections.forEach(face => {
                 console.log(face._box);
                 
+                if(debug)
+                {
+                    ctx.strokeStyle = "red";
+                    ctx.rect(face._box.x, face._box.y,face._box.width,face._box.height);
+                    ctx.stroke();
+                }
 
                 let temp_h = face._box.height;
                 let temp_w = face._box.width;
                 
+                let offset = temp_w / 2;
+
                 temp_w = temp_w * scale;
 
                 let temp_h2 = customCensor.height;
                 let temp_w2 = customCensor.width;
 
-                let offset = 0;//(temp_w / scale);
+                //(temp_w / scale);
 
                 /*
                 if(temp_w >= temp_w2)
@@ -57,7 +66,7 @@ function scanImages()
 
                 //ctx.drawImage(customCensor,face._box.x,face._box.y + face._box.height, temp_w2 * scale, temp_h2 * scale);
 
-                ctx.drawImage(customCensor,face._box.x + offset,face._box.y + face._box.height, temp_w, temp_h2 * (temp_w / temp_w2));
+                ctx.drawImage(customCensor,face._box.x - offset,face._box.y + face._box.height, temp_w, temp_h2 * (temp_w / temp_w2));
 
 
             });
@@ -105,6 +114,12 @@ function dropDownChange() {
     }
     
 };
+
+function debugChange()
+{
+    debug = !debug;
+    changed = true;
+}
 
 function thresholdChange() {
 
