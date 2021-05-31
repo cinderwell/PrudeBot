@@ -110,16 +110,16 @@ function dropDownChange() {
     {
         customCensor.src = choice;
         document.getElementById('censor').src = customCensor.src;
-        changed = true;
+        
     }
-    
+    changed = true;
 };
 
 function debugChange()
 {
     debug = !debug;
     changed = true;
-}
+};
 
 function thresholdChange() {
 
